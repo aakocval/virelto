@@ -6,7 +6,7 @@ import { PLANS } from "@/server/billing/plans";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 
-export const metadata = { title: "Pricing — I Like PDF" };
+export const metadata = { title: "Pricing — Virelto" };
 
 export default function PricingPage() {
   return (

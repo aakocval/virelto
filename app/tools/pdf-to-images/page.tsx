@@ -1,7 +1,7 @@
 import { ToolPageShell } from "@/app/_components/tool-page-shell";
 import { PdfToImagesTool } from "@/features/pdf-to-images/PdfToImagesTool";
 
-export const metadata = { title: "PDF to Images — I Like PDF" };
+export const metadata = { title: "PDF to Images — Virelto" };
 
 export default function PdfToImagesPage() {
   return (

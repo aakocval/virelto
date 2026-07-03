@@ -1,7 +1,7 @@
 import { LoginForm } from "@/app/_components/login-form";
 import { Card } from "@/shared/ui/card";
 
-export const metadata = { title: "Log in — I Like PDF" };
+export const metadata = { title: "Log in — Virelto" };
 
 export default function LoginPage() {
   return (

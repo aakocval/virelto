@@ -8,7 +8,7 @@ import { PLANS } from "@/server/billing/plans";
 import { Badge } from "@/shared/ui/badge";
 import { Card } from "@/shared/ui/card";
 
-export const metadata = { title: "Dashboard — I Like PDF" };
+export const metadata = { title: "Dashboard — Virelto" };
 
 export default async function DashboardPage() {
   if (!isSupabaseConfigured()) redirect("/login");

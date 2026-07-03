@@ -1,7 +1,7 @@
 import { ToolPageShell } from "@/app/_components/tool-page-shell";
 import { SplitTool } from "@/features/split/SplitTool";
 
-export const metadata = { title: "Split PDF — I Like PDF" };
+export const metadata = { title: "Split PDF — Virelto" };
 
 export default function SplitPage() {
   return (

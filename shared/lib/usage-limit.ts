@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { PLAN_DAILY_LIMITS, type PlanId } from "@/shared/utils/constants";
 
 function todayKey(): string {
-  return `ilikepdf_usage_${new Date().toISOString().slice(0, 10)}`;
+  return `virelto_usage_${new Date().toISOString().slice(0, 10)}`;
 }
 
 function readUsage(): number {

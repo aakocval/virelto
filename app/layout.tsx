@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "I Like PDF — Free, private, client-side PDF tools",
+  title: "Virelto — Free, private, client-side PDF tools",
   description:
     "Merge, split, rotate, and edit PDFs entirely in your browser. Nothing is ever uploaded.",
 };

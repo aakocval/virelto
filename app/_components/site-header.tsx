@@ -16,7 +16,7 @@ export async function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <FileText className="size-5 text-primary" />
-          <span>I Like PDF</span>
+          <span>Virelto</span>
         </Link>
 
         <nav className="flex items-center gap-1">
