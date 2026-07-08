@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { signInWithGoogle, signInWithMagicLink } from "@/server/auth/actions";
@@ -12,6 +13,15 @@ export function LoginForm() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (!error) return;
+    toast.error(error);
+    router.replace("/login");
+  }, [searchParams, router]);
 
   function handleMagicLink(event: React.FormEvent) {
     event.preventDefault();

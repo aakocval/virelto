@@ -4,6 +4,7 @@ import { rotatePdf } from "@/pdf-engine/client/operations/rotate";
 import { deletePages } from "@/pdf-engine/client/operations/deletePages";
 import { reorderPages } from "@/pdf-engine/client/operations/reorderPages";
 import { imagesToPdf } from "@/pdf-engine/client/operations/imagesToPdf";
+import { signPdf } from "@/pdf-engine/client/operations/sign";
 import type { WorkerRequest, WorkerResponse } from "@/pdf-engine/client/types";
 
 function toBuffer(bytes: Uint8Array): ArrayBuffer {
@@ -53,6 +54,12 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
       }
       case "imagesToPdf": {
         const bytes = await imagesToPdf(payload.images);
+        result = toBuffer(bytes);
+        transfer = [result];
+        break;
+      }
+      case "sign": {
+        const bytes = await signPdf(payload.file, payload.elements);
         result = toBuffer(bytes);
         transfer = [result];
         break;

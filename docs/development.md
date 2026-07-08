@@ -56,7 +56,7 @@ UI state and calls into it. No PDF bytes ever touch `app/api/*`.
    ```bash
    npm run dev
    ```
-   All 7 PDF tools work immediately, with no env vars required — auth and
+   All 8 PDF tools work immediately, with no env vars required — auth and
    billing only activate once Supabase/Stripe keys are set.
 
 ## Deployment

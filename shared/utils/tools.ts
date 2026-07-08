@@ -1,5 +1,6 @@
 import {
   FileImage,
+  FileSignature,
   FileStack,
   Images,
   RotateCw,
@@ -57,6 +58,12 @@ export const TOOLS: ToolDefinition[] = [
     name: "PDF to Images",
     description: "Export any page as a high-quality PNG or JPEG.",
     icon: FileImage,
+  },
+  {
+    slug: "sign",
+    name: "Sign PDF",
+    description: "Add text and signatures to fill out and sign forms.",
+    icon: FileSignature,
   },
 ];
 

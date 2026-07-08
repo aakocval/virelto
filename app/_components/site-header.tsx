@@ -16,23 +16,16 @@ export async function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <FileText className="size-5 text-primary" />
-          <span>Virelto</span>
+          <span>Virelto Tools</span>
         </Link>
 
         <nav className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/pricing">Pricing</Link>
-          </Button>
           <ThemeToggle />
           {user ? (
             <Button size="sm" asChild>
               <Link href="/dashboard">Dashboard</Link>
             </Button>
-          ) : (
-            <Button size="sm" asChild>
-              <Link href="/login">Log in</Link>
-            </Button>
-          )}
+          ) : null}
         </nav>
       </div>
     </header>

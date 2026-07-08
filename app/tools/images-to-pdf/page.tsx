@@ -1,7 +1,7 @@
 import { ToolPageShell } from "@/app/_components/tool-page-shell";
 import { ImagesToPdfTool } from "@/features/images-to-pdf/ImagesToPdfTool";
 
-export const metadata = { title: "Images to PDF — Virelto" };
+export const metadata = { title: "Images to PDF" };
 
 export default function ImagesToPdfPage() {
   return (

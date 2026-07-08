@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { SiteFooter } from "@/app/_components/site-footer";
 import { SiteHeader } from "@/app/_components/site-header";
 import { QueryProvider } from "@/shared/lib/query-client";
 import { Toaster } from "@/shared/ui/sonner";
@@ -19,7 +20,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Virelto — Free, private, client-side PDF tools",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://vireltotools.com",
+  ),
+  title: {
+    default: "Virelto Tools — Free, private, client-side PDF tools",
+    template: "%s — Virelto Tools",
+  },
   description:
     "Merge, split, rotate, and edit PDFs entirely in your browser. Nothing is ever uploaded.",
 };
@@ -40,6 +47,7 @@ export default function RootLayout({
           <QueryProvider>
             <SiteHeader />
             <main className="flex flex-1 flex-col">{children}</main>
+            <SiteFooter />
             <Toaster />
           </QueryProvider>
         </ThemeProvider>
