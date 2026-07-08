@@ -4,7 +4,8 @@ export type PdfOperation =
   | "rotate"
   | "deletePages"
   | "reorderPages"
-  | "imagesToPdf";
+  | "imagesToPdf"
+  | "sign";
 
 export interface PageRange {
   start: number;
@@ -47,6 +48,35 @@ export interface ImagesToPdfPayload {
   images: ImageInput[];
 }
 
+export interface TextSignElement {
+  type: "text";
+  pageIndex: number;
+  /** Left offset as a fraction of page width, 0-1, top-left origin. */
+  xPct: number;
+  /** Top offset as a fraction of page height, 0-1, top-left origin. */
+  yPct: number;
+  fontSize: number;
+  value: string;
+}
+
+export interface ImageSignElement {
+  type: "signature";
+  pageIndex: number;
+  xPct: number;
+  yPct: number;
+  widthPct: number;
+  heightPct: number;
+  /** PNG data URL, e.g. from a signature canvas. */
+  dataUrl: string;
+}
+
+export type SignElement = TextSignElement | ImageSignElement;
+
+export interface SignPayload {
+  file: ArrayBuffer;
+  elements: SignElement[];
+}
+
 export type PdfOperationPayloadMap = {
   merge: MergePayload;
   split: SplitPayload;
@@ -54,6 +84,7 @@ export type PdfOperationPayloadMap = {
   deletePages: DeletePagesPayload;
   reorderPages: ReorderPagesPayload;
   imagesToPdf: ImagesToPdfPayload;
+  sign: SignPayload;
 };
 
 export type PdfOperationResultMap = {
@@ -63,6 +94,7 @@ export type PdfOperationResultMap = {
   deletePages: ArrayBuffer;
   reorderPages: ArrayBuffer;
   imagesToPdf: ArrayBuffer;
+  sign: ArrayBuffer;
 };
 
 export type WorkerRequest = {

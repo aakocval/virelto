@@ -1,12 +1,20 @@
--- I Like PDF — Supabase schema
+-- Virelto Tools — Supabase schema
 -- Run this once in the Supabase SQL editor for your project.
 -- Stores only user metadata and subscription status — never any PDF/file data.
 
 create table if not exists public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   email text not null,
+  role text not null default 'user' check (role in ('user', 'admin')),
   created_at timestamptz not null default now()
 );
+
+-- Safe to re-run against a database that already has `profiles` without `role`.
+alter table public.profiles
+  add column if not exists role text not null default 'user' check (role in ('user', 'admin'));
+
+-- Promote an existing user to admin (removes the usage limit for them):
+--   update public.profiles set role = 'admin' where email = 'you@example.com';
 
 create table if not exists public.subscriptions (
   user_id uuid primary key references auth.users (id) on delete cascade,

@@ -1,7 +1,9 @@
+import { Suspense } from "react";
+
 import { LoginForm } from "@/app/_components/login-form";
 import { Card } from "@/shared/ui/card";
 
-export const metadata = { title: "Log in — Virelto" };
+export const metadata = { title: "Log in" };
 
 export default function LoginPage() {
   return (
@@ -14,7 +16,9 @@ export default function LoginPage() {
             limit.
           </p>
         </div>
-        <LoginForm />
+        <Suspense>
+          <LoginForm />
+        </Suspense>
       </Card>
     </div>
   );

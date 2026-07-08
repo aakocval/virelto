@@ -1,7 +1,7 @@
 import { ToolPageShell } from "@/app/_components/tool-page-shell";
 import { ReorderPagesTool } from "@/features/reorder-pages/ReorderPagesTool";
 
-export const metadata = { title: "Reorder PDF Pages — Virelto" };
+export const metadata = { title: "Reorder PDF Pages" };
 
 export default function ReorderPagesPage() {
   return (

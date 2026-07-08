@@ -1,7 +1,7 @@
 import { ToolPageShell } from "@/app/_components/tool-page-shell";
 import { RotateTool } from "@/features/rotate/RotateTool";
 
-export const metadata = { title: "Rotate PDF — Virelto" };
+export const metadata = { title: "Rotate PDF" };
 
 export default function RotatePage() {
   return (
