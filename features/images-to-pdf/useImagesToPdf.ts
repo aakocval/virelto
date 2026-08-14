@@ -5,7 +5,6 @@ import { toast } from "sonner";
 
 import { runPdfOperation } from "@/pdf-engine/client/worker-client";
 import { downloadBytes } from "@/shared/lib/download";
-import { useUsageLimit } from "@/shared/lib/usage-limit";
 
 export type ImagesToPdfStage = "idle" | "processing" | "done";
 
@@ -13,7 +12,6 @@ export function useImagesToPdf() {
   const [files, setFiles] = useState<File[]>([]);
   const [stage, setStage] = useState<ImagesToPdfStage>("idle");
   const [result, setResult] = useState<ArrayBuffer | null>(null);
-  const usage = useUsageLimit("guest");
 
   const addFiles = useCallback((incoming: File[]) => {
     setFiles((prev) => [...prev, ...incoming]);
@@ -38,11 +36,6 @@ export function useImagesToPdf() {
       toast.error("Add at least one image.");
       return;
     }
-    if (usage.hasReachedLimit) {
-      toast.error("Daily usage limit reached. Sign up or upgrade for more.");
-      return;
-    }
-
     setStage("processing");
     try {
       const buffers = await Promise.all(files.map((file) => file.arrayBuffer()));
@@ -52,7 +45,6 @@ export function useImagesToPdf() {
       }));
       const pdf = await runPdfOperation("imagesToPdf", { images }, buffers);
       setResult(pdf);
-      usage.recordUsage();
       setStage("done");
     } catch (error) {
       toast.error(
@@ -60,7 +52,7 @@ export function useImagesToPdf() {
       );
       setStage("idle");
     }
-  }, [files, usage]);
+  }, [files]);
 
   const download = useCallback(() => {
     if (result) downloadBytes(result, "images.pdf");
@@ -81,6 +73,5 @@ export function useImagesToPdf() {
     process,
     download,
     reset,
-    usage,
   };
 }

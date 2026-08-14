@@ -9,7 +9,6 @@ import {
   renderPageToBlob,
 } from "@/pdf-engine/client/pdfjs";
 import { downloadBlob } from "@/shared/lib/download";
-import { useUsageLimit } from "@/shared/lib/usage-limit";
 
 export type PdfToImagesStage =
   | "idle"
@@ -28,7 +27,6 @@ export function usePdfToImages() {
   const [format, setFormat] = useState<ImageFormat>("image/png");
   const [stage, setStage] = useState<PdfToImagesStage>("idle");
   const [exportCount, setExportCount] = useState(0);
-  const usage = useUsageLimit("guest");
 
   const loadFile = useCallback(async (files: File[]) => {
     const selectedFile = files[0];
@@ -61,11 +59,6 @@ export function usePdfToImages() {
       toast.error("Select at least one page to export.");
       return;
     }
-    if (usage.hasReachedLimit) {
-      toast.error("Daily usage limit reached. Sign up or upgrade for more.");
-      return;
-    }
-
     setStage("processing");
     try {
       const bytes = await file.arrayBuffer();
@@ -79,7 +72,6 @@ export function usePdfToImages() {
       }
 
       setExportCount(pageNumbers.length);
-      usage.recordUsage();
       setStage("done");
     } catch (error) {
       toast.error(
@@ -87,7 +79,7 @@ export function usePdfToImages() {
       );
       setStage("ready");
     }
-  }, [file, selected, format, usage]);
+  }, [file, selected, format]);
 
   const reset = useCallback(() => {
     setFile(null);
@@ -108,6 +100,5 @@ export function usePdfToImages() {
     process,
     reset,
     exportCount,
-    usage,
   };
 }

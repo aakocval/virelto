@@ -7,7 +7,6 @@ import { renderAllThumbnails } from "@/pdf-engine/client/pdfjs";
 import type { RotationAngle } from "@/pdf-engine/client/types";
 import { runPdfOperation } from "@/pdf-engine/client/worker-client";
 import { downloadBytes } from "@/shared/lib/download";
-import { useUsageLimit } from "@/shared/lib/usage-limit";
 
 export type RotateStage = "idle" | "loading" | "ready" | "processing" | "done";
 
@@ -26,7 +25,6 @@ export function useRotate() {
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [stage, setStage] = useState<RotateStage>("idle");
   const [result, setResult] = useState<ArrayBuffer | null>(null);
-  const usage = useUsageLimit("guest");
 
   const loadFile = useCallback(async (files: File[]) => {
     const selectedFile = files[0];
@@ -71,10 +69,6 @@ export function useRotate() {
 
   const process = useCallback(async () => {
     if (!file) return;
-    if (usage.hasReachedLimit) {
-      toast.error("Daily usage limit reached. Sign up or upgrade for more.");
-      return;
-    }
 
     setStage("processing");
     try {
@@ -85,7 +79,6 @@ export function useRotate() {
         [bytes],
       );
       setResult(rotated);
-      usage.recordUsage();
       setStage("done");
     } catch (error) {
       toast.error(
@@ -93,7 +86,7 @@ export function useRotate() {
       );
       setStage("ready");
     }
-  }, [file, rotations, usage]);
+  }, [file, rotations]);
 
   const download = useCallback(() => {
     if (result) downloadBytes(result, "rotated.pdf");
@@ -119,6 +112,5 @@ export function useRotate() {
     process,
     download,
     reset,
-    usage,
   };
 }

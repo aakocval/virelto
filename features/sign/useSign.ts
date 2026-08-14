@@ -8,7 +8,6 @@ import { loadPdfDocument, renderPageThumbnail } from "@/pdf-engine/client/pdfjs"
 import type { SignElement } from "@/pdf-engine/client/types";
 import { runPdfOperation } from "@/pdf-engine/client/worker-client";
 import { downloadBytes } from "@/shared/lib/download";
-import { useUsageLimit } from "@/shared/lib/usage-limit";
 
 export type SignStage = "idle" | "loading" | "ready" | "processing" | "done";
 
@@ -23,7 +22,6 @@ export function useSign() {
   const [stage, setStage] = useState<SignStage>("idle");
   const [result, setResult] = useState<ArrayBuffer | null>(null);
   const docRef = useRef<PDFDocumentProxy | null>(null);
-  const usage = useUsageLimit("guest");
 
   const renderPage = useCallback(async (index: number) => {
     const doc = docRef.current;
@@ -120,11 +118,6 @@ export function useSign() {
       toast.error("Add some text or a signature first.");
       return;
     }
-    if (usage.hasReachedLimit) {
-      toast.error("Daily usage limit reached. Sign up or upgrade for more.");
-      return;
-    }
-
     setStage("processing");
     try {
       const bytes = await file.arrayBuffer();
@@ -132,7 +125,6 @@ export function useSign() {
         bytes,
       ]);
       setResult(signed);
-      usage.recordUsage();
       setStage("done");
     } catch (error) {
       toast.error(
@@ -140,7 +132,7 @@ export function useSign() {
       );
       setStage("ready");
     }
-  }, [elements, file, usage]);
+  }, [elements, file]);
 
   const download = useCallback(() => {
     if (result) downloadBytes(result, "signed.pdf");

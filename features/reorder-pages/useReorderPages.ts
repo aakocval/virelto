@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { renderAllThumbnails } from "@/pdf-engine/client/pdfjs";
 import { runPdfOperation } from "@/pdf-engine/client/worker-client";
 import { downloadBytes } from "@/shared/lib/download";
-import { useUsageLimit } from "@/shared/lib/usage-limit";
 
 export type ReorderPagesStage =
   | "idle"
@@ -21,7 +20,6 @@ export function useReorderPages() {
   const [order, setOrder] = useState<number[]>([]);
   const [stage, setStage] = useState<ReorderPagesStage>("idle");
   const [result, setResult] = useState<ArrayBuffer | null>(null);
-  const usage = useUsageLimit("guest");
 
   const loadFile = useCallback(async (files: File[]) => {
     const selectedFile = files[0];
@@ -42,10 +40,6 @@ export function useReorderPages() {
 
   const process = useCallback(async () => {
     if (!file) return;
-    if (usage.hasReachedLimit) {
-      toast.error("Daily usage limit reached. Sign up or upgrade for more.");
-      return;
-    }
 
     setStage("processing");
     try {
@@ -56,7 +50,6 @@ export function useReorderPages() {
         [bytes],
       );
       setResult(output);
-      usage.recordUsage();
       setStage("done");
     } catch (error) {
       toast.error(
@@ -64,7 +57,7 @@ export function useReorderPages() {
       );
       setStage("ready");
     }
-  }, [file, order, usage]);
+  }, [file, order]);
 
   const download = useCallback(() => {
     if (result) downloadBytes(result, "reordered.pdf");
@@ -91,6 +84,5 @@ export function useReorderPages() {
     process,
     download,
     reset,
-    usage,
   };
 }

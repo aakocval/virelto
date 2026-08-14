@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { renderAllThumbnails } from "@/pdf-engine/client/pdfjs";
 import { runPdfOperation } from "@/pdf-engine/client/worker-client";
 import { downloadBytes } from "@/shared/lib/download";
-import { useUsageLimit } from "@/shared/lib/usage-limit";
 
 export type SplitStage = "idle" | "loading" | "ready" | "processing" | "done";
 export type SplitMode = "range" | "individual";
@@ -21,7 +20,6 @@ export function useSplit() {
   const [fromPage, setFromPage] = useState(1);
   const [toPage, setToPage] = useState(1);
   const [results, setResults] = useState<ArrayBuffer[]>([]);
-  const usage = useUsageLimit("guest");
 
   const loadFile = useCallback(async (files: File[]) => {
     const selected = files[0];
@@ -43,10 +41,6 @@ export function useSplit() {
 
   const process = useCallback(async () => {
     if (!file) return;
-    if (usage.hasReachedLimit) {
-      toast.error("Daily usage limit reached. Sign up or upgrade for more.");
-      return;
-    }
 
     setStage("processing");
     try {
@@ -60,7 +54,6 @@ export function useSplit() {
         bytes,
       ]);
       setResults(outputs);
-      usage.recordUsage();
       setStage("done");
     } catch (error) {
       toast.error(
@@ -68,7 +61,7 @@ export function useSplit() {
       );
       setStage("ready");
     }
-  }, [file, mode, fromPage, toPage, thumbnails, usage]);
+  }, [file, mode, fromPage, toPage, thumbnails]);
 
   const downloadAll = useCallback(() => {
     results.forEach((bytes, i) => {
@@ -102,6 +95,5 @@ export function useSplit() {
     downloadAll,
     reset,
     resultCount: results.length,
-    usage,
   };
 }
