@@ -26,24 +26,31 @@ const HIGHLIGHTS = [
 
 export default function HomePage() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-16">
+    <div className="mx-auto w-full max-w-6xl px-6 py-14 sm:py-20">
       <section className="mx-auto max-w-2xl text-center">
-        <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+        <h1 className="text-5xl leading-[1.05] font-bold tracking-tight text-balance sm:text-6xl">
           PDF tools that never leave your browser
         </h1>
-        <p className="mt-4 text-lg text-muted-foreground text-balance">
+        <p className="mt-5 text-xl text-muted-foreground text-balance">
           Merge, split, rotate, and organize PDFs instantly. No uploads, no
           waiting, no privacy trade-offs.
         </p>
       </section>
 
-      <section className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {TOOLS.map((tool) => (
           <Link key={tool.slug} href={`/tools/${tool.slug}`}>
-            <Card className="flex h-full flex-col gap-3 p-6 transition-colors hover:border-primary/50 hover:bg-muted/40">
-              <tool.icon className="size-6 text-primary" />
-              <h2 className="font-medium text-foreground">{tool.name}</h2>
-              <p className="text-sm text-muted-foreground">
+            <Card className="h-full gap-4 px-6 transition-transform duration-200 active:scale-[0.98] sm:hover:scale-[1.015]">
+              <div
+                className="flex size-11 items-center justify-center rounded-[0.8rem] text-white"
+                style={{ backgroundColor: tool.color }}
+              >
+                <tool.icon className="size-6" strokeWidth={1.75} />
+              </div>
+              <h2 className="text-lg font-semibold text-foreground">
+                {tool.name}
+              </h2>
+              <p className="-mt-2 text-[0.9375rem] text-muted-foreground">
                 {tool.description}
               </p>
             </Card>
@@ -51,11 +58,14 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="mt-20 grid grid-cols-1 gap-8 border-t border-border pt-12 sm:grid-cols-3">
+      <section className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {HIGHLIGHTS.map((item) => (
-          <div key={item.title} className="flex flex-col items-start gap-2">
-            <item.icon className="size-5 text-primary" />
-            <h3 className="font-medium text-foreground">{item.title}</h3>
+          <div
+            key={item.title}
+            className="flex flex-col items-start gap-2 rounded-[1.25rem] bg-card p-6"
+          >
+            <item.icon className="size-5 text-primary" strokeWidth={2} />
+            <h3 className="font-semibold text-foreground">{item.title}</h3>
             <p className="text-sm text-muted-foreground">{item.description}</p>
           </div>
         ))}

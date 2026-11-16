@@ -1,6 +1,6 @@
-import { FileText } from "lucide-react";
 import Link from "next/link";
 
+import { LogoMark } from "@/app/_components/logo";
 import { isSupabaseConfigured } from "@/server/auth/config";
 import { createSupabaseServerClient } from "@/server/auth/supabase-server";
 import { Button } from "@/shared/ui/button";
@@ -12,11 +12,14 @@ export async function SiteHeader() {
     : null;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <FileText className="size-5 text-primary" />
-          <span>Virelto Tools</span>
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur-xl backdrop-saturate-150">
+      <div className="mx-auto flex h-12 max-w-6xl items-center justify-between px-6">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-[1.0625rem] font-semibold tracking-tight"
+        >
+          <LogoMark className="size-6" />
+          Virelto
         </Link>
 
         <nav className="flex items-center gap-1">
