@@ -10,7 +10,7 @@ export const metadata = { title: "Pricing" };
 
 export default function PricingPage() {
   return (
-    <div className="mx-auto w-full max-w-3xl px-6 py-16">
+    <div className="mx-auto w-full max-w-[980px] px-4 py-16">
       <div className="mb-12 text-center">
         <h1 className="text-3xl font-semibold tracking-tight">
           Simple pricing

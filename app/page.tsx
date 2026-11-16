@@ -26,7 +26,7 @@ const HIGHLIGHTS = [
 
 export default function HomePage() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-14 sm:py-20">
+    <div className="mx-auto w-full max-w-[980px] px-4 py-14 sm:py-20">
       <section className="mx-auto max-w-2xl text-center">
         <h1 className="text-5xl leading-[1.05] font-bold tracking-tight text-balance sm:text-6xl">
           PDF tools that never leave your browser
